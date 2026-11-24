@@ -1,0 +1,20 @@
+# Removed from manifest.yml because deploy says 'Agent not allowed' (see PROGRESS.md). Paste under 'modules:' to re-enable.
+  rovo:agent:
+    - key: countersign-agent
+      name: CounterSign Compliance
+      description: Checks supplement texts and Confluence pages for EU health-claim problems and missing mandatory statements, suggests compliant rewordings, creates Jira correction tickets.
+      prompt: resource:agent-resource;prompts/agent-prompt.txt
+      conversationStarters:
+        - Check this page for non-compliant health claims
+        - Is this text allowed? "Lowers blood sugar and treats diabetes naturally"
+        - Which mandatory statements are missing on this supplement page?
+        - Create a Jira ticket with the corrections for this page
+      actions:
+        - check-text
+        - check-page
+        - suggest-rewording
+        - list-jira-projects
+        - create-correction-ticket
+      skills:
+        - countersign-review
+

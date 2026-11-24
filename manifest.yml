@@ -1,0 +1,159 @@
+modules:
+  # ---- Phase 1: window opened from the "more actions" menu of every Confluence page ----
+  confluence:contentAction:
+    - key: countersign-check-page
+      title: CounterSign - check this page
+      resource: main
+      render: native
+      resolver:
+        function: resolver
+
+  # ---- Phase 2: reusable Rovo skill and actions (agent module: see docs/rovo-agent-module.yml) ----
+  # ---- Phase 5: dashboard page in the sidebar of every space (Apps section) ----
+  confluence:spacePage:
+    - key: countersign-dashboard
+      title: CounterSign dashboard
+      route: countersign
+      resource: dashboard
+      render: native
+      resolver:
+        function: resolver
+  # ---- Phase 6: admin settings page (Confluence settings > Apps) ----
+  confluence:globalSettings:
+    - key: countersign-settings
+      title: CounterSign settings
+      resource: settings
+      render: native
+      resolver:
+        function: resolver
+
+  # ---- Phase 3: MCP server. These tools are exposed through the Atlassian MCP server ----
+  rovo:mcp:
+    - key: countersign-mcp
+      name: CounterSign
+      tools:
+        - check-text
+        - check-page
+        - suggest-rewording
+        - list-jira-projects
+        - create-correction-ticket
+  rovo:skill:
+    - key: countersign-review
+      source:
+        dir: skills/countersign-review
+      dependencies:
+        tools:
+          - check-text
+          - check-page
+          - suggest-rewording
+          - list-jira-projects
+          - create-correction-ticket
+
+  action:
+    - key: check-text
+      name: Check text
+      function: check-text-fn
+      actionVerb: GET
+      description: Checks supplement marketing text for health claims not allowed by EU Reg. 1924/2006, missing mandatory statements and Romanian diacritics. Returns found text, problem and suggested rewording.
+      inputs:
+        text:
+          title: Text
+          type: string
+          required: true
+          description: The product description or marketing text to check.
+        language:
+          title: Language
+          type: string
+          required: false
+          description: Optional. "en" or "ro". Leave empty to detect the language automatically.
+    - key: check-page
+      name: Check Confluence page
+      function: check-page-fn
+      actionVerb: GET
+      description: Reads a Confluence page (the one the user views, or a given page id) and checks it for non-compliant health claims, missing mandatory statements and Romanian diacritics.
+      inputs:
+        pageId:
+          title: Page id
+          type: string
+          required: false
+          description: Optional. The Confluence page id. Leave empty to use the page the user is currently viewing.
+    - key: suggest-rewording
+      name: Suggest compliant rewording
+      function: suggest-fn
+      actionVerb: GET
+      description: Finds only non-compliant claims and diacritics problems in a text and returns compliant rewording suggestions for each.
+      inputs:
+        text:
+          title: Text
+          type: string
+          required: true
+          description: The sentence or paragraph to reword.
+    - key: list-jira-projects
+      name: List Jira projects
+      function: list-projects-fn
+      actionVerb: GET
+      description: Lists the Jira projects the user can see, so the user can choose where a correction ticket will be created.
+      inputs:
+        nameContains:
+          title: Name filter
+          type: string
+          required: false
+          description: Optional. Not used for filtering yet.
+    - key: create-correction-ticket
+      name: Create correction ticket
+      function: create-ticket-fn
+      actionVerb: CREATE
+      description: Checks a Confluence page and creates ONE Jira ticket listing all issues with suggested rewordings. Call only after the user asked for a ticket and confirmed the project.
+      inputs:
+        projectKey:
+          title: Jira project key
+          type: string
+          required: true
+          description: The key of the Jira project (for example CF). Use list-jira-projects to find it.
+        pageId:
+          title: Page id
+          type: string
+          required: false
+          description: Optional. The Confluence page id. Leave empty to use the page the user is currently viewing.
+
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: check-text-fn
+      handler: actions.checkText
+    - key: check-page-fn
+      handler: actions.checkPage
+    - key: suggest-fn
+      handler: actions.suggestRewording
+    - key: list-projects-fn
+      handler: actions.listJiraProjects
+    - key: create-ticket-fn
+      handler: actions.createCorrectionTicket
+
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+  - key: dashboard
+    path: src/frontend/dashboard.jsx
+  - key: settings
+    path: src/frontend/settings.jsx
+  - key: agent-resource
+    path: resource/agent
+
+permissions:
+  scopes:
+    - read:page:confluence
+    - write:page:confluence
+    - read:space:confluence
+    - storage:app
+    - read:jira-work
+    - write:jira-work
+    - read:graph:page:confluence
+    - read:graph:user:atlassian
+
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/6b5dbc8a-30f9-4b0f-8f0f-eeb96b67016f
