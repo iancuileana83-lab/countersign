@@ -4,12 +4,14 @@
 // It takes the plain text of a page and returns a list of issues:
 //   type "claim"       - health claim that is not allowed / needs authorisation
 //   type "mandatory"   - a mandatory food-supplement statement is missing
+//   type "recommended" - an OPTIONAL suggestion (never a legal requirement)
 //   type "diacritics"  - Romanian diacritics problem
 //   type "custom"      - a word from the admin's own forbidden list or brand list
 //
-// All rules are DRAFT (see rules.js).
+// Rules: see rules.js. Label: see label.js.
 // =============================================================================
 import { CLAIM_RULES, MANDATORY_RULES, SUPPLEMENT_HINTS } from './rules.js';
+import { withWordingNote } from './label.js';
 import { checkDiacritics, detectLanguage } from './diacritics.js';
 
 const SEVERITY_ORDER = { high: 0, medium: 1, low: 2 };
@@ -89,18 +91,21 @@ export function analyzeText(text, options = {}) {
       }
       if (overlaps(start, end)) continue;
       taken.push([start, end]);
+      // Optional authorised exceptions (see rules.js): milder severity + "check the exact wording".
+      const around = text.slice(Math.max(0, start - 150), Math.min(text.length, end + 150));
+      const exception = (rule.exceptions || []).find((e) => e.appliesTo.test(m[0]) && e.context(around));
       issues.push({
         id: makeId(rule.id, m[0], start),
         ruleId: rule.id,
         type: 'claim',
-        severity: rule.severity,
-        status: 'draft',
+        severity: exception ? exception.severity : rule.severity,
+        status: 'reviewed',
         matched: m[0],
         start,
         excerpt: excerptAround(text, start, m[0].length),
-        message: rule.message,
+        message: exception ? exception.message : rule.message,
         legalBasis: rule.legalBasis,
-        suggestion: rule.suggestion,
+        suggestion: withWordingNote(exception ? exception.suggestion : rule.suggestion, rule.lang),
       });
     }
   }
@@ -112,13 +117,15 @@ export function analyzeText(text, options = {}) {
   if ((looksLikeSupplement || options.forceMandatory) && text.trim().length > 0) {
     for (const rule of MANDATORY_RULES) {
       if (disabled.has(rule.id)) continue;
+      // Some "present" patterns are global (made with anyOf): reset so a previous page cannot change this result.
+      rule.present.lastIndex = 0;
       if (rule.present.test(text)) continue;
       issues.push({
         id: makeId(rule.id, '', 0),
         ruleId: rule.id,
-        type: 'mandatory',
+        type: rule.type || 'mandatory',
         severity: rule.severity,
-        status: 'draft',
+        status: 'reviewed',
         matched: '',
         start: -1,
         excerpt: '(missing from the page)',
@@ -132,7 +139,7 @@ export function analyzeText(text, options = {}) {
   // ---- 3) Romanian diacritics ------------------------------------------------
   if (language === 'ro' && !disabled.has('RO-DIACRITICS')) {
     for (const d of checkDiacritics(text)) {
-      issues.push({ ...d, id: makeId(d.ruleId, d.matched || d.message, 0), status: 'draft', start: -1 });
+      issues.push({ ...d, id: makeId(d.ruleId, d.matched || d.message, 0), status: 'reviewed', start: -1 });
     }
   }
 
@@ -189,7 +196,7 @@ export function analyzeText(text, options = {}) {
 }
 
 export function summarize(issues) {
-  const byType = { claim: 0, mandatory: 0, diacritics: 0, custom: 0 };
+  const byType = { claim: 0, mandatory: 0, recommended: 0, diacritics: 0, custom: 0 };
   const bySeverity = { high: 0, medium: 0, low: 0 };
   for (const i of issues) {
     byType[i.type] = (byType[i.type] || 0) + 1;

@@ -35,6 +35,12 @@ Recommended by doctors and pharmacists. No side effects, 100% safe.</p>
 <h2>Directions</h2>
 <p>Recommended daily dose: 1 capsule per day, taken with a meal. Do not exceed the recommended daily dose.</p>
 <p>Food supplements should not be used as a substitute for a varied and balanced diet and a healthy lifestyle.
-Keep out of the reach of young children. Store in a cool, dry place.</p>`,
+Keep out of the reach of young children. Store in a cool, dry place.</p>
+<h2>Ingredients</h2>
+<p>Ingredients: olive oil, capsule shell (gelatin, glycerol), cholecalciferol (vitamin D3). Allergens: none declared.</p>
+<h2>Nutrition information</h2>
+<p>Per daily dose (1 capsule): vitamin D 25 micrograms (500% NRV).</p>
+<p>Distributed by Aurelia Wellness SRL (fictional company), 1 Example Street, Bucharest, Romania. Pack of 30 capsules.</p>
+<p>Notification: not applicable, this is a fictional demo product.</p>`,
   },
 ];

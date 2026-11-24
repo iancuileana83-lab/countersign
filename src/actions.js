@@ -4,15 +4,15 @@
 // Rovo Studio) can call. They are declared as rovo:action modules in manifest.yml.
 //
 // Each handler receives (payload, requestContext). The payload holds the inputs
-// declared in the manifest. All rules are DRAFT and this is not legal advice.
+// declared in the manifest. The rules carry the review label (see engine/label.js); this is not legal advice.
 // =============================================================================
 import { analyzeText } from './engine/checker.js';
 import { loadPage } from './lib/confluence.js';
 import { listProjects, createTicket } from './lib/jira.js';
 import { analysisOptions } from './lib/settings.js';
+import { REVIEW_LABEL } from './engine/label.js';
 
-const DRAFT_NOTE =
-  'All CounterSign rules are DRAFT (based on EU Regulation 1924/2006). Results help a human reviewer and are not legal advice.';
+const REVIEW_NOTE = `CounterSign rules (based on EU Regulation 1924/2006): ${REVIEW_LABEL}. Results help a human reviewer.`;
 
 // Inputs can arrive at the top level of the payload or inside payload.inputs.
 const input = (payload, name) => payload?.[name] ?? payload?.inputs?.[name];
@@ -38,7 +38,7 @@ function report(result, extra = {}) {
     summary: result.summary,
     issues: compact(result.issues),
     moreIssuesNotShown: Math.max(0, result.issues.length - 30),
-    note: DRAFT_NOTE,
+    note: REVIEW_NOTE,
   };
 }
 
@@ -63,8 +63,8 @@ export async function suggestRewording(payload) {
   if (!text.trim()) return { error: 'No text was provided.' };
   const result = analyzeText(text, await analysisOptions());
   const claims = result.issues.filter((i) => i.type === 'claim' || i.type === 'diacritics');
-  if (claims.length === 0) return { message: 'No problematic claim or diacritics issue found in this text.', note: DRAFT_NOTE };
-  return { rewordings: compact(claims), note: DRAFT_NOTE };
+  if (claims.length === 0) return { message: 'No problematic claim or diacritics issue found in this text.', note: REVIEW_NOTE };
+  return { rewordings: compact(claims), note: REVIEW_NOTE };
 }
 
 // ---- action: check-page ------------------------------------------------------
@@ -93,7 +93,7 @@ export async function createCorrectionTicket(payload) {
   if (!projectKey) return { error: 'No Jira project key was given. Call list-jira-projects and ask the user which project to use.' };
   const page = await loadPage(pageId);
   const result = analyzeText(page.text, await analysisOptions());
-  if (result.issues.length === 0) return { message: 'No issues found on this page, so no ticket was created.', note: DRAFT_NOTE };
+  if (result.issues.length === 0) return { message: 'No issues found on this page, so no ticket was created.', note: REVIEW_NOTE };
   const created = await createTicket({ projectKey, pageTitle: page.title, pageUrl: page.pageUrl, issues: result.issues });
   let ticketUrl = '';
   try {
@@ -101,5 +101,5 @@ export async function createCorrectionTicket(payload) {
   } catch (e) {
     ticketUrl = '';
   }
-  return { message: `Created Jira ticket ${created.key} with ${result.issues.length} issue(s).`, ticket: created.key, ticketUrl, note: DRAFT_NOTE };
+  return { message: `Created Jira ticket ${created.key} with ${result.issues.length} issue(s).`, ticket: created.key, ticketUrl, note: REVIEW_NOTE };
 }

@@ -24,5 +24,5 @@ Devpost bonus "Best Marketplace published app" only needs a listing OR a submitt
 ## Draft listing text
 **Name:** CounterSign - Supplement Claim Check
 **Tagline:** Check food-supplement copy for EU claim problems before you publish it.
-**Summary:** CounterSign reads Confluence pages and finds health claims that are not allowed under EU Regulation 1924/2006, missing mandatory supplement statements and Romanian diacritics problems. It suggests compliant rewordings, creates Jira correction tickets, scans whole spaces and exposes its tools to Rovo and MCP. Rules are DRAFT and not legal advice.
+**Summary:** CounterSign reads Confluence pages and finds health claims that are not allowed under EU Regulation 1924/2006, missing mandatory supplement statements and Romanian diacritics problems. It suggests compliant rewordings, creates Jira correction tickets, scans whole spaces and exposes its tools to Rovo and MCP. Reviewed by a community pharmacy professional (20 years' experience) - not legal advice.
 **Categories:** Compliance, Content, Productivity.

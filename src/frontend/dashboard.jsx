@@ -35,6 +35,7 @@ const tileStyle = xcss({
 const TYPE_LABEL = {
   claim: 'Health claims',
   mandatory: 'Missing mandatory statements',
+  recommended: 'Optional suggestions',
   diacritics: 'Romanian diacritics',
   custom: 'Company rules',
 };
@@ -130,7 +131,7 @@ const App = () => {
       <Stack space="space.100">
         <Heading size="large">CounterSign space dashboard</Heading>
         <Text>
-          Scans every page of this space (up to 100) against the DRAFT rules for EU food-supplement claims. Run the scan again after
+          Scans every page of this space (up to 100) against the reviewed rules for EU food-supplement claims. Run the scan again after
           editing pages: issues that disappear are counted as fixed.
         </Text>
         <Inline space="space.100" alignBlock="center">

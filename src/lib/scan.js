@@ -68,7 +68,7 @@ export function summarizeLedger(ledger, pages = []) {
   const open = entries.filter((e) => e.status === 'open');
   const fixed = entries.filter((e) => e.status === 'fixed');
   const count = (list, field, values) => Object.fromEntries(values.map((v) => [v, list.filter((e) => e[field] === v).length]));
-  const types = ['claim', 'mandatory', 'diacritics', 'custom'];
+  const types = ['claim', 'mandatory', 'recommended', 'diacritics', 'custom'];
   const severities = ['high', 'medium', 'low'];
 
   const perPage = pages.map((p) => {

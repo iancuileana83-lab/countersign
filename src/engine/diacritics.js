@@ -1,5 +1,5 @@
 // =============================================================================
-// CounterSign - Romanian diacritics checks (status: DRAFT word list)
+// CounterSign - Romanian diacritics checks (reviewed word list)
 //
 // Romanian uses the letters ă â î ș ț. Texts written without them ("sanatate"
 // instead of "sănătate") look unprofessional on a product page and hurt search.

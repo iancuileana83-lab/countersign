@@ -61,7 +61,7 @@ const App = () => {
   return (
     <Stack space="space.250">
       <Heading size="large">CounterSign settings</Heading>
-      <Text>These settings apply to the page check, the space dashboard and the Rovo tools. The built-in EU rules stay DRAFT and cannot be switched off here.</Text>
+      <Text>These settings apply to the page check, the space dashboard and the Rovo tools. The built-in EU rules cannot be switched off here.</Text>
 
       {message && (
         <SectionMessage appearance={message.appearance}>

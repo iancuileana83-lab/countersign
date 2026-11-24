@@ -2,11 +2,11 @@
 import assert from 'node:assert/strict';
 import { checkText, suggestRewording } from '../src/actions.js';
 
-test('check-text action returns a compact report with DRAFT note', async () => {
+test('check-text action returns a compact report with the review note', async () => {
   const r = await checkText({ text: 'Our capsule lowers blood sugar and treats diabetes.' });
   assert.ok(r.summary.total >= 2);
   assert.ok(r.issues[0].suggestedRewording);
-  assert.ok(/DRAFT/.test(r.note));
+  assert.ok(/Reviewed by a community pharmacy professional/.test(r.note));
 });
 
 test('check-text accepts inputs nested under payload.inputs', async () => {

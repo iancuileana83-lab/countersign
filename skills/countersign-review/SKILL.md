@@ -4,7 +4,7 @@ description: Review food-supplement marketing text or a Confluence page for EU h
 license: MIT
 compatibility: Requires the CounterSign Forge app (check-text, check-page, suggest-rewording, list-jira-projects, create-correction-ticket actions).
 metadata:
-  status: DRAFT rules, not legal advice
+  status: Reviewed by a community pharmacy professional (20 years' experience) - not legal advice
 ---
 
 # CounterSign review procedure
@@ -16,10 +16,10 @@ Use this procedure when someone wants supplement copy checked.
 3. **Explain each issue** in three short lines: *Found* (the quoted text), *Problem* (why it is not allowed or missing), *Suggested rewording* (from the result; never invent an "authorised claim").
 4. **Offer next steps:** rewrite the text with the suggestions, or create a Jira ticket.
 5. **Ticket flow.** Only when asked: call `list-jira-projects`, ask which project (a normal Jira project, not Jira Service Management), then call `create-correction-ticket`. Give the ticket key to the user.
-6. **Always end with the disclaimer:** the rules are DRAFT, this is not legal advice, and a qualified regulatory person must approve the final wording.
+6. **Always end with the disclaimer:** the rules are "Reviewed by a community pharmacy professional (20 years' experience) - not legal advice", and a qualified regulatory person must approve the final wording.
 
 ## Do not
-- Do not say a text is "compliant" or "approved"; say that the DRAFT rules found no issues.
+- Do not say a text is "compliant" or "approved"; say that the rules found no issues.
 - Do not create tickets without a clear request.
 
 ## Tools used and why

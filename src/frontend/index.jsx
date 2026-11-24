@@ -20,6 +20,7 @@ import ForgeReconciler, {
   xcss,
 } from '@forge/react';
 import { invoke } from '@forge/bridge';
+import { REVIEW_LABEL } from '../engine/label.js';
 
 const cardStyle = xcss({
   borderColor: 'color.border',
@@ -37,6 +38,7 @@ const SEVERITY = {
 const TYPE_LABEL = {
   claim: 'Health claim',
   mandatory: 'Missing mandatory statement',
+  recommended: 'Optional suggestion',
   diacritics: 'Romanian diacritics',
   custom: 'Company rule',
 };
@@ -141,10 +143,9 @@ const App = () => {
           <Lozenge appearance="default">{bySeverity.low} low</Lozenge>
           <Text>Language: {result.language === 'ro' ? 'Romanian' : 'English'}</Text>
         </Inline>
-        <SectionMessage appearance="warning" title="DRAFT rules">
+        <SectionMessage appearance="information" title={REVIEW_LABEL}>
           <Text>
-            The rules are based on EU Regulation 1924/2006 and are still DRAFT. This tool helps a human reviewer; it is not legal
-            advice.
+            The rules are based on EU Regulation 1924/2006. This tool helps a human reviewer; it is not legal advice.
           </Text>
         </SectionMessage>
       </Stack>
@@ -185,7 +186,7 @@ const App = () => {
                 <Inline space="space.100" alignBlock="center">
                   <Lozenge appearance={SEVERITY[issue.severity].appearance}>{SEVERITY[issue.severity].label}</Lozenge>
                   <Strong>{TYPE_LABEL[issue.type] || issue.type}</Strong>
-                  <Text>({issue.ruleId}, DRAFT)</Text>
+                  <Text>({issue.ruleId})</Text>
                 </Inline>
                 <Text>Found: {issue.excerpt}</Text>
                 <Text>{issue.message}</Text>
