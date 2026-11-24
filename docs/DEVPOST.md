@@ -1,6 +1,7 @@
 # Devpost write-up (Ileana reviews every line before submitting)
 
 **Project name:** CounterSign
+**Demo video (YouTube, public):** https://youtu.be/DLjtfCYPfzQ
 **Category:** Apps for Specialized Industries
 **Bonus prizes we apply to:**
 - **Best apps with Teamwork Graph integration** - read-only integration (Preview API), working in production.

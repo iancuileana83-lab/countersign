@@ -68,3 +68,6 @@ Thumbs.db
 forge-env.ps1
 docs/teamwork-graph/
 docs/teamwork-graph-scopes.txt
+
+# Demo video (large binary) - not for the repo
+video/
