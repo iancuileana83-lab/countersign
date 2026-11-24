@@ -32,7 +32,7 @@ CounterSign is a Forge app with a manifest and several modules (`confluence:cont
 - **Where it is used:** the "Page context (Teamwork Graph)" section of the window and the Jira ticket description.
 - **Privacy:** only people's names are used, no e-mail addresses. Results follow the user's own permissions (`asUser`).
 - **Safe by design:** if the graph is unavailable or has nothing for a page, the section is hidden and the check works as before.
-- **Status to state truthfully (fill in after tonight's re-check):** people (owner) were returned in production for a test page. Linked pages: `[ ] returned` / `[ ] not returned yet on our free test site`.
+- **Verified in production (24 November 2026):** for a fictional test page the graph returned the people (creator, owner, contributor) and a linked page. The link appeared some hours after the page was created, so a new page can take time to show up in the graph. In our test only one of the two links on the page was returned.
 
 ## How we built it
 A pure-JavaScript rule engine with 39 unit tests, UI Kit front ends, Forge storage for scan history and settings, Jira REST calls made as the user. The rules were drafted with Claude Code and are to be reviewed by a pharmacy professional.
