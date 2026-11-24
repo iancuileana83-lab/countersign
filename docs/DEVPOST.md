@@ -1,4 +1,4 @@
-# Devpost write-up (Ileana reviews every line before submitting)
+# Devpost write-up: CounterSign
 
 **Project name:** CounterSign
 **Demo video (YouTube, public):** https://youtu.be/DLjtfCYPfzQ
@@ -6,7 +6,7 @@
 **Bonus prizes we apply to:**
 - **Best apps with Teamwork Graph integration** - read-only integration (Preview API), working in production.
 - **Best app with Atlassian MCP** - `rovo:mcp` module with the 5 tools. (Endpoint exists and answers with OAuth; external MCP client access is off by default and enabled by a site admin. We have not run an end-to-end session with an external MCP client; we say so.)
-- **Best Agents** - only if the judges accept reusable `rovo:action` + `rovo:skill` without an agent module (see "Challenges"). We do not claim a working Rovo agent.
+- **Best Agents** - we apply with the 5 reusable `rovo:action` tools and the `rovo:skill` ("countersign-review"), which any Rovo agent can use. To be honest: our own Rovo agent is written but blocked by Atlassian's deploy-time screening, so it is **not** in the submission and we do not claim a working agent (see "Challenges").
 - Marketplace bonus: NOT applied for (nothing submitted).
 
 ## Built with Claude Code (said openly)
@@ -56,10 +56,19 @@ Pharmacist-reviewed rule packs per country, more languages, an approval workflow
 ## Testing instructions (for judges)
 1. Install with this link: https://developer.atlassian.com/console/install/6b5dbc8a-30f9-4b0f-8f0f-eeb96b67016f?signature=AYABePPwCdUS85e7awqRqdrRV28AAAADAAdhd3Mta21zAEthcm46YXdzOmttczp1cy13ZXN0LTI6NzA5NTg3ODM1MjQzOmtleS83MDVlZDY3MC1mNTdjLTQxYjUtOWY5Yi1lM2YyZGNjMTQ2ZTcAuAECAQB4CxqLTo9l4lqXuFjNim1xJM%2Bp%2F3TVP9xHS2BrU5DRRucBu8LIB5ww2gYJMGhVs1vcqAAAAH4wfAYJKoZIhvcNAQcGoG8wbQIBADBoBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDOcxD3MHYFxA8HTU6AIBEIA73m1CX8klz%2BLrDldBCSMarZqCTXkAYiaxWeNOMijFh2u6C5CDOIJFkER3Y7vVm0X5DfumF7yzHc6APUMAB2F3cy1rbXMAS2Fybjphd3M6a21zOmV1LXdlc3QtMTo3MDk1ODc4MzUyNDM6a2V5LzQ2MzBjZTZiLTAwYzMtNGRlMi04NzdiLTYyN2UyMDYwZTVjYwC4AQICAHi9bVMAkme4qVQX1fQHo6ePw3H40A7cGfz7yrmSfBWMXgFymBvMCse3sxW8jPHkrUWyAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM0YndhuUZiWTbmPMCAgEQgDv%2FdqN7S3MMdz3%2BOLX29sTwJRyLDNFf2KJmfcqsDS6oWJjbuSbVCg13m8XnVXKyA0IHLyRWwnUL%2Fdb7pgAHYXdzLWttcwBLYXJuOmF3czprbXM6dXMtZWFzdC0xOjcwOTU4NzgzNTI0MzprZXkvNmMxMjBiYTAtNGNkNS00OTg1LWI4MmUtNDBhMDQ5NTJjYzU3ALgBAgIAeDYASx0XCjkny4iLV6vz%2BKtEGSGT6kdt0QRpkn6D%2FlVEAXwe03c%2Fr3Ugq9Xn5qYaCxYAAAB%2BMHwGCSqGSIb3DQEHBqBvMG0CAQAwaAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAw2hyZm60ZoNTDwOMoCARCAO8zEDv%2Bl8EawzD%2Bc%2Ft8jDKB3tJOMVINn4qbPD22conNPCJGTHa9mc3%2BcPd41kgfEcNn2AQbqzzwYZJE2AgAAAAAMAAAQAAAAAAAAAAAAAAAAAPhL9HYPjIPBcNYQi9KBIxr%2F%2F%2F%2F%2FAAAAAQAAAAAAAAAAAAAAAQAAADKNpKD7Xl9tWaQX%2BlV8EQKZ1BCyAedlZPYYG2CtV2aCO9LvuuAh7JimMSeAkWdl4tt5L8GCV6SQGC5aX0jRZvuFUio%3D&product=jira&product=confluence - on a site that has Confluence and Jira. Click **Allow access** when Confluence asks.
 2. You need a normal Jira project (not Jira Service Management).
-3. Open any Confluence page > "â€¢â€¢â€¢" > Apps > **CounterSign - check this page**. Press **Create fictional demo pages in this space**, then check **demo 1**.
+3. Open any Confluence page > "•••" > Apps > **CounterSign - check this page**. Press **Create fictional demo pages in this space**, then check **demo 1**.
 4. Press **Create one Jira ticket for all open issues** and choose your Jira project.
 5. Space sidebar > Space apps > **CounterSign dashboard** > **Scan the space**.
 6. Confluence settings > Apps > **CounterSign settings**.
+
+## Built with
+Atlassian Forge, Forge UI Kit (@forge/react), JavaScript (Node.js 24 runtime), Forge Storage (KVS), Confluence REST API, Jira REST API, Atlassian Teamwork Graph API (read only, Preview), Rovo actions, Rovo skill, Atlassian MCP server (rovo:mcp), Claude Code.
+
+## Links
+- Demo video (YouTube, public): https://youtu.be/DLjtfCYPfzQ
+- Privacy policy: https://iancuileana83-lab.github.io/countersign-privacy/
+- Installation link: see "Testing instructions" above.
+- Source code: GitHub repository `iancuileana83-lab/countersign` (currently private; the author decides before submission whether to make it public).
 
 ## Privacy policy
 https://iancuileana83-lab.github.io/countersign-privacy/
